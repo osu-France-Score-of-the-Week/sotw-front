@@ -1,12 +1,19 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 
 const BACKEND_API = process.env.BACKEND_API_URL || "http://localhost:8080/api/v1"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const backendUrl = `${BACKEND_API}/players`
+    const { searchParams } = new URL(request.url)
+    const page = searchParams.get("page")
 
-    const response = await fetch(backendUrl, {
+    const backendUrl = new URL(`${BACKEND_API}/players`)
+
+    if (page) {
+      backendUrl.searchParams.append("page", page)
+    }
+
+    const response = await fetch(backendUrl.toString(), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

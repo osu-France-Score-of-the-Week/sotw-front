@@ -19,6 +19,7 @@ export interface Player {
   Username: string
   GlobalRank: number
   Pp: number
+  scoreCount: number
 }
 
 export interface Beatmapset {
@@ -67,6 +68,12 @@ export interface ScorePageResponse {
 
 export interface PlayersResponse {
   players: Player[]
+}
+
+export interface PlayerPageResponse {
+  players: Player[]
+  page: number
+  totalPages: number
 }
 
 export interface BeatmapAttributes {

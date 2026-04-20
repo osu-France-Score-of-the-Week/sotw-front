@@ -119,9 +119,9 @@ export default function PlayerScoresPage() {
 
         {isLoading ? (
           <div className="space-y-2 py-2">
-            <Skeleton className="h-[90px] w-full rounded-lg" />
-            <Skeleton className="h-[90px] w-full rounded-lg" />
-            <Skeleton className="h-[90px] w-full rounded-lg" />
+            <Skeleton className="h-[90px] w-full" />
+            <Skeleton className="h-[90px] w-full" />
+            <Skeleton className="h-[90px] w-full" />
           </div>
         ) : scores.length === 0 ? (
           <Alert>

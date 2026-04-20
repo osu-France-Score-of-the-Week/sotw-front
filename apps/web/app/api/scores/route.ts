@@ -10,10 +10,15 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const cursor = searchParams.get("cursor")
+    const sort = searchParams.get("sort")?.toLowerCase() || "recent"
 
     const backendUrl = new URL(`${BACKEND_API}/scores`)
     if (cursor) {
       backendUrl.searchParams.append("cursor", cursor)
+    }
+
+    if (sort === "best") {
+      backendUrl.searchParams.append("sort", "best")
     }
 
     console.log("[PROXY] Fetching from backend:", backendUrl.toString())

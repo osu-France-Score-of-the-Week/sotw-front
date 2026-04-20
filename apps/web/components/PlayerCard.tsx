@@ -34,7 +34,7 @@ export function PlayerCard({ player }: PlayerCardProps) {
 
             <div className="flex flex-col items-end gap-1 text-right">
               <Badge variant="secondary" className="h-5 px-2 text-[10px]">
-                ID {player.ID}
+                {player.scoreCount ? `${player.scoreCount} score` : "No scores"}
               </Badge>
               <p className="text-sm font-semibold leading-tight">{player.Pp.toFixed(2)}pp</p>
             </div>
