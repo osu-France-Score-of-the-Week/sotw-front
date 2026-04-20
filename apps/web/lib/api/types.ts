@@ -59,6 +59,16 @@ export interface ScoresResponse {
   cursor?: string
 }
 
+export interface ScorePageResponse {
+  scores: Score[]
+  page: number
+  totalPages: number
+}
+
+export interface PlayersResponse {
+  players: Player[]
+}
+
 export interface BeatmapAttributes {
   StarRating: number
   MaxCombo: number
