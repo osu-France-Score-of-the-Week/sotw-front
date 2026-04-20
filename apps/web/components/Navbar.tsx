@@ -3,8 +3,12 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { Button } from "@workspace/ui/components/button"
-import { cn } from "@workspace/ui/lib/utils"
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@workspace/ui/components/navigation-menu"
 
 const navItems = [
   { href: "/", label: "Scores" },
@@ -24,23 +28,27 @@ export function Navbar() {
           <span className="hidden sm:inline">SOTW</span>
         </Link>
 
-        <nav className="flex items-center gap-2">
-          {navItems.map((item) => {
-            const isActive = item.href === "/players" ? pathname.startsWith("/players") : pathname === item.href
+        <NavigationMenu viewport={false} className="max-w-none flex-1 justify-end">
+          <NavigationMenuList className="gap-1">
+            {navItems.map((item) => {
+              const isActive = item.href === "/players" ? pathname.startsWith("/players") : pathname === item.href
 
-            return (
-              <Button
-                key={item.href}
-                asChild
-                variant={isActive ? "default" : "ghost"}
-                size="sm"
-                className={cn("rounded-full px-4", isActive && "shadow-sm")}
-              >
-                <Link href={item.href}>{item.label}</Link>
-              </Button>
-            )
-          })}
-        </nav>
+              return (
+                <NavigationMenuItem key={item.href}>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href={item.href}
+                      data-active={isActive}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              )
+            })}
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </header>
   )
