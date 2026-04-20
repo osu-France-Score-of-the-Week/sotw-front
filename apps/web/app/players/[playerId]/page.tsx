@@ -5,6 +5,14 @@ import { useParams, usePathname, useRouter, useSearchParams } from "next/navigat
 
 import { Alert, AlertDescription, AlertTitle } from "@workspace/ui/components/alert"
 import { Button } from "@workspace/ui/components/button"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@workspace/ui/components/pagination"
+import { Separator } from "@workspace/ui/components/separator"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 
 import { ScoreCard } from "@/components/ScoreCard"
@@ -40,7 +48,7 @@ export default function PlayerScoresPage() {
   const canPrev = page > 1
   const canNext = page < totalPages
 
-  const updateQuery = (next: { sort?: SortValue; page?: number }) => {
+  const buildHref = (next: { sort?: SortValue; page?: number }) => {
     const paramsValue = new URLSearchParams(searchParams.toString())
 
     const nextSort = next.sort ?? sort
@@ -59,7 +67,11 @@ export default function PlayerScoresPage() {
     }
 
     const query = paramsValue.toString()
-    router.push(query ? `${pathname}?${query}` : pathname)
+    return query ? `${pathname}?${query}` : pathname
+  }
+
+  const updateQuery = (next: { sort?: SortValue; page?: number }) => {
+    router.push(buildHref(next))
   }
 
   return (
@@ -96,6 +108,8 @@ export default function PlayerScoresPage() {
           </Button>
         </div>
 
+        <Separator />
+
         {error ? (
           <Alert variant="destructive">
             <AlertTitle>Erreur de chargement</AlertTitle>
@@ -122,29 +136,37 @@ export default function PlayerScoresPage() {
               ))}
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                onClick={() => updateQuery({ page: page - 1 })}
-                disabled={!canPrev}
-              >
-                Précédent
-              </Button>
-              <p className="text-sm text-muted-foreground">
+            <Separator />
+
+            <Pagination className="justify-between pt-1">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href={canPrev ? buildHref({ page: page - 1 }) : "#"}
+                    text="Précédent"
+                    className={canPrev ? undefined : "pointer-events-none opacity-50"}
+                    aria-disabled={!canPrev}
+                    tabIndex={canPrev ? undefined : -1}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+
+              <p className="flex items-center text-sm text-muted-foreground">
                 Page {Math.min(page, totalPages)} / {totalPages}
               </p>
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                onClick={() => updateQuery({ page: page + 1 })}
-                disabled={!canNext}
-              >
-                Suivant
-              </Button>
-            </div>
+
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationNext
+                    href={canNext ? buildHref({ page: page + 1 }) : "#"}
+                    text="Suivant"
+                    className={canNext ? undefined : "pointer-events-none opacity-50"}
+                    aria-disabled={!canNext}
+                    tabIndex={canNext ? undefined : -1}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </>
         )}
       </div>
