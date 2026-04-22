@@ -14,7 +14,12 @@ import type {
 const API_BASE = "/api"
 
 export class ScoresAPI {
-  static async getScores(options?: { cursor?: string; sort?: "recent" | "best" }): Promise<ScoresResponse> {
+  static async getScores(options?: {
+    cursor?: string
+    sort?: "recent" | "best"
+    from?: string
+    to?: string
+  }): Promise<ScoresResponse> {
     const searchParams = new URLSearchParams()
     if (options?.cursor) {
       searchParams.append("cursor", options.cursor)
@@ -22,6 +27,14 @@ export class ScoresAPI {
 
     if (options?.sort === "best") {
       searchParams.append("sort", "best")
+    }
+
+    if (options?.from) {
+      searchParams.append("from", options.from)
+    }
+
+    if (options?.to) {
+      searchParams.append("to", options.to)
     }
 
     const query = searchParams.toString()
@@ -50,6 +63,8 @@ export class ScoresAPI {
     playerId: string
     page?: number
     sort?: "recent" | "best"
+    from?: string
+    to?: string
   }): Promise<ScorePageResponse> {
     const searchParams = new URLSearchParams()
 
@@ -59,6 +74,14 @@ export class ScoresAPI {
 
     if (params.sort === "best") {
       searchParams.append("sort", "best")
+    }
+
+    if (params.from) {
+      searchParams.append("from", params.from)
+    }
+
+    if (params.to) {
+      searchParams.append("to", params.to)
     }
 
     const query = searchParams.toString()

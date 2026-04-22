@@ -14,6 +14,8 @@ export async function GET(
 
     const page = searchParams.get("page")
     const sort = searchParams.get("sort")?.toLowerCase() || "recent"
+    const from = searchParams.get("from")
+    const to = searchParams.get("to")
 
     if (!player_id) {
       return NextResponse.json({ error: "Missing player_id" }, { status: 400 })
@@ -41,6 +43,14 @@ export async function GET(
 
     if (sort !== "recent") {
       backendUrl.searchParams.append("sort", sort)
+    }
+
+    if (from) {
+      backendUrl.searchParams.append("from", from)
+    }
+
+    if (to) {
+      backendUrl.searchParams.append("to", to)
     }
 
     const response = await fetch(backendUrl.toString(), {

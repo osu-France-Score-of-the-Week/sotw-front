@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const cursor = searchParams.get("cursor")
     const sort = searchParams.get("sort")?.toLowerCase() || "recent"
+    const from = searchParams.get("from")
+    const to = searchParams.get("to")
 
     const backendUrl = new URL(`${BACKEND_API}/scores`)
     if (cursor) {
@@ -19,6 +21,14 @@ export async function GET(request: NextRequest) {
 
     if (sort === "best") {
       backendUrl.searchParams.append("sort", "best")
+    }
+
+    if (from) {
+      backendUrl.searchParams.append("from", from)
+    }
+
+    if (to) {
+      backendUrl.searchParams.append("to", to)
     }
 
     console.log("[PROXY] Fetching from backend:", backendUrl.toString())

@@ -15,7 +15,15 @@ interface UseScoresResult {
 
 const COOLDOWN_MS = 5000 // 5 secondes
 
-export function useScores(sort: "recent" | "best" = "recent"): UseScoresResult {
+export function useScores(options?: {
+  sort?: "recent" | "best"
+  from?: string
+  to?: string
+}): UseScoresResult {
+  const sort = options?.sort ?? "recent"
+  const from = options?.from
+  const to = options?.to
+
   const [scores, setScores] = useState<Score[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -54,7 +62,7 @@ export function useScores(sort: "recent" | "best" = "recent"): UseScoresResult {
     lastRequestAtRef.current = now
 
     try {
-      const response = await ScoresAPI.getScores({ cursor, sort })
+      const response = await ScoresAPI.getScores({ cursor, sort, from, to })
       setScores((prev) =>
         sort === "best"
           ? appendUniqueScores(prev, response.scores)
@@ -68,7 +76,7 @@ export function useScores(sort: "recent" | "best" = "recent"): UseScoresResult {
     } finally {
       inFlightRef.current = false
     }
-  }, [appendUniqueScores, cursor, prependUniqueScores, sort])
+  }, [appendUniqueScores, cursor, from, prependUniqueScores, sort, to])
 
   // Fetch initial scores
   useEffect(() => {
@@ -76,7 +84,7 @@ export function useScores(sort: "recent" | "best" = "recent"): UseScoresResult {
       try {
         setIsLoading(true)
         setError(null)
-        const response = await ScoresAPI.getScores({ sort })
+        const response = await ScoresAPI.getScores({ sort, from, to })
         setScores(response.scores)
         setCursor(response.cursor)
         setHasMore(!!response.cursor)
@@ -90,7 +98,7 @@ export function useScores(sort: "recent" | "best" = "recent"): UseScoresResult {
     }
 
     fetchInitialScores()
-  }, [sort])
+  }, [from, sort, to])
 
   useEffect(() => {
     if (sort !== "recent") return

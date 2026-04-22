@@ -16,6 +16,7 @@ import { Separator } from "@workspace/ui/components/separator"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 
 import { ScoreCard } from "@/components/ScoreCard"
+import { DatePickerWithRange } from "@/components/DatePicker"
 import { usePlayerScores } from "@/hooks/usePlayerScores"
 
 type SortValue = "recent" | "best"
@@ -38,11 +39,17 @@ export default function PlayerScoresPage() {
 
   const sort: SortValue = searchParams.get("sort") === "best" ? "best" : "recent"
   const page = toValidPage(searchParams.get("page"))
+  const from = searchParams.get("from") ?? undefined
+  const to = searchParams.get("to") ?? undefined
+  const bestFrom = sort === "best" ? from : undefined
+  const bestTo = sort === "best" ? to : undefined
 
   const { scores, isLoading, error, totalPages } = usePlayerScores({
     playerId,
     sort,
     page,
+    from: bestFrom,
+    to: bestTo,
   })
 
   const canPrev = page > 1
@@ -58,6 +65,8 @@ export default function PlayerScoresPage() {
       paramsValue.set("sort", "best")
     } else {
       paramsValue.delete("sort")
+      paramsValue.delete("from")
+      paramsValue.delete("to")
     }
 
     if (nextPage > 1) {
@@ -106,6 +115,8 @@ export default function PlayerScoresPage() {
           >
             Best
           </Button>
+
+          {sort === "best" ? <DatePickerWithRange /> : null}
         </div>
 
         <Separator />

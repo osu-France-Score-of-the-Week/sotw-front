@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from "@workspace/ui/components/al
 import { Button } from "@workspace/ui/components/button"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import { Separator } from "@workspace/ui/components/separator"
+import { DatePickerWithRange } from "./DatePicker"
 
 export function ScoresFeed() {
   const router = useRouter()
@@ -15,7 +16,9 @@ export function ScoresFeed() {
   const searchParams = useSearchParams()
 
   const sort = searchParams.get("sort") === "best" ? "best" : "recent"
-  const { scores, isLoading, error, hasMore, fetchNextPage } = useScores(sort)
+  const from = searchParams.get("from") ?? undefined
+  const to = searchParams.get("to") ?? undefined
+  const { scores, isLoading, error, hasMore, fetchNextPage } = useScores({ sort, from, to })
 
   const updateSort = (nextSort: "recent" | "best") => {
     const params = new URLSearchParams(searchParams.toString())
@@ -56,7 +59,6 @@ export function ScoresFeed() {
       <div className="flex flex-wrap items-center gap-2">
         <Button
           type="button"
-          size="sm"
           variant={sort === "recent" ? "default" : "outline"}
           onClick={() => updateSort("recent")}
         >
@@ -64,12 +66,15 @@ export function ScoresFeed() {
         </Button>
         <Button
           type="button"
-          size="sm"
           variant={sort === "best" ? "default" : "outline"}
           onClick={() => updateSort("best")}
         >
           Best
         </Button>
+
+        {sort === "best" && (
+          <DatePickerWithRange />
+        )}
       </div>
 
       <Separator />

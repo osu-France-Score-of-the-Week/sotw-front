@@ -8,6 +8,8 @@ interface UsePlayerScoresOptions {
   playerId?: string
   page?: number
   sort?: "recent" | "best"
+  from?: string
+  to?: string
 }
 
 interface UsePlayerScoresResult {
@@ -22,6 +24,8 @@ export function usePlayerScores({
   playerId,
   page = 1,
   sort = "recent",
+  from,
+  to,
 }: UsePlayerScoresOptions): UsePlayerScoresResult {
   const [scores, setScores] = useState<Score[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -48,6 +52,8 @@ export function usePlayerScores({
           playerId,
           page,
           sort,
+          from,
+          to,
         })
 
         setScores(response.scores)
@@ -62,7 +68,7 @@ export function usePlayerScores({
     }
 
     void fetchPlayerScores()
-  }, [playerId, page, sort])
+  }, [from, page, playerId, sort, to])
 
   return {
     scores,
