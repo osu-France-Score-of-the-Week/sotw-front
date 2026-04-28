@@ -91,6 +91,17 @@ export function DatePickerWithRange() {
           onSelect={setDate}
           numberOfMonths={2}
         />
+        <div className="flex items-center justify-end gap-2 border-t p-3">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setDate(undefined)}
+            disabled={!date?.from && !date?.to}
+          >
+            Reset
+          </Button>
+        </div>
       </PopoverContent>
     </Popover>
   )

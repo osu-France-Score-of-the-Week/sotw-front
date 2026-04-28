@@ -101,7 +101,6 @@ export default function PlayerScoresPage() {
         <div className="flex flex-wrap items-center gap-2">
           <Button
             type="button"
-            size="sm"
             variant={sort === "recent" ? "default" : "outline"}
             onClick={() => updateQuery({ sort: "recent", page: 1 })}
           >
@@ -109,7 +108,6 @@ export default function PlayerScoresPage() {
           </Button>
           <Button
             type="button"
-            size="sm"
             variant={sort === "best" ? "default" : "outline"}
             onClick={() => updateQuery({ sort: "best", page: 1 })}
           >
