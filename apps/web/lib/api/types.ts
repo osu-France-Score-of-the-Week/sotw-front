@@ -53,6 +53,7 @@ export interface Score {
   PlayerID: number
   Player: Player
   Attributes: BeatmapAttributes
+  AnalyzedScore: number
 }
 
 export interface ScoresResponse {
@@ -77,6 +78,6 @@ export interface PlayerPageResponse {
 }
 
 export interface BeatmapAttributes {
-  StarRating: number
-  MaxCombo: number
+  star_rating: number
+  max_combo: number
 }
