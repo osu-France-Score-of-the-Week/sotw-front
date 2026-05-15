@@ -58,16 +58,16 @@ export function ScoreCard({ score }: ScoreCardProps) {
       rel="noopener noreferrer"
       className="block"
     >
-      <Card size="default" className="relative overflow-hidden py-2">
+      <Card size="default" className="relative overflow-hidden py-3">
         <div className="absolute top-0 bottom-0 left-0 w-48 overflow-hidden">
           <Badge
-            className={`absolute top-2 left-2 z-20 h-5 px-2 text-[10px] font-semibold ${mapStatusClass}`}
+            className={`absolute top-2 left-2 z-20 h-6 px-3 text-sm font-semibold ${mapStatusClass}`}
           >
             {mapStatusLabel.toUpperCase()}
           </Badge>
-          {score.AnalyzedScore >= 30 && (
+          {score.AnalyzedScore > 0 && (
             <Badge
-              className={`absolute bottom-2 left-2 z-20 h-5 px-2 text-[10px] font-semibold text-red-400`}
+              className={`absolute bottom-2 left-2 z-20 h-6 px-3 text-sm font-semibold text-red-400`}
             >
               {analyzedScore} 🔥
             </Badge>
@@ -81,23 +81,23 @@ export function ScoreCard({ score }: ScoreCardProps) {
         </div>
 
         <CardContent className="relative z-20">
-          <div className="flex items-start justify-between gap-3 pl-50">
+          <div className="flex items-start justify-between gap-4 pl-50">
             <div className="min-w-0 flex-1 space-y-1">
-              <p className="truncate text-sm leading-tight font-medium">
+              <p className="truncate text-base leading-tight font-medium">
                 {score.Beatmap.Beatmapset.Title}
-                <span className="ml-2 text-[11px] font-normal text-muted-foreground">
+                <span className="ml-2 text-sm font-normal text-muted-foreground">
                   {score.Beatmap.Beatmapset.Artist}
                 </span>
               </p>
-              <p className="text-[11px] leading-tight text-muted-foreground">
+              <p className="text-sm leading-tight text-muted-foreground">
                 {score.Beatmap.Version.length > 60
                   ? `${score.Beatmap.Version.substring(0, 60)}...`
                   : score.Beatmap.Version}{" "}
                 • {starRating}
               </p>
 
-              <div className="flex items-center gap-1.5 pt-0.5">
-                <Avatar size="sm">
+              <div className="flex items-center gap-2 pt-0.5">
+                <Avatar size="default">
                   <AvatarImage
                     src={`https://a.ppy.sh/${score.PlayerID}`}
                     alt={score.Player.Username}
@@ -105,10 +105,10 @@ export function ScoreCard({ score }: ScoreCardProps) {
                   <AvatarFallback>{fallback}</AvatarFallback>
                 </Avatar>
                 <div className="text-left">
-                  <p className="text-xs leading-tight font-medium">
+                  <p className="text-sm leading-tight font-medium">
                     {score.Player.Username}
                   </p>
-                  <p className="text-[11px] leading-tight text-muted-foreground">
+                  <p className="text-sm leading-tight text-muted-foreground">
                     #{score.Player.GlobalRank}
                   </p>
                 </div>
@@ -116,9 +116,9 @@ export function ScoreCard({ score }: ScoreCardProps) {
             </div>
 
             <div className="flex flex-col items-end self-center text-right">
-              <div className="flex flex-wrap items-center gap-1">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge
-                  className={`h-4 px-1.5 text-[10px] ${rankBadgeVariant[score.Rank] || "bg-muted text-foreground"}`}
+                  className={`h-5 px-2 text-sm ${rankBadgeVariant[score.Rank] || "bg-muted text-foreground"}`}
                 >
                   {score.Rank}
                 </Badge>
@@ -127,46 +127,46 @@ export function ScoreCard({ score }: ScoreCardProps) {
                     <Badge
                       key={mod.acronym}
                       variant="secondary"
-                      className="h-4 px-1.5 text-[10px]"
+                      className="h-5 px-2 text-sm"
                     >
                       {mod.acronym}
                     </Badge>
                   ))
                 ) : (
-                  <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
+                  <Badge variant="secondary" className="h-5 px-2 text-sm">
                     NM
                   </Badge>
                 )}
               </div>
-              <p className="pt-1 text-sm leading-tight font-semibold">
+              <p className="pt-1 text-base leading-tight font-semibold">
                 {score.Pp.toFixed(2)}pp
               </p>
-              <div className="mt-0.5 flex items-center justify-end gap-1.5 text-[11px] leading-tight">
+              <div className="mt-0.5 flex items-center justify-end gap-2 text-sm leading-tight">
                 <span className="font-semibold text-muted-foreground">
                   {score.MaxCombo}x • {(score.Accuracy * 100).toFixed(2)}%
                 </span>
                 <span className="font-semibold text-muted-foreground"> • </span>
-                <span className="text-[9px] font-medium text-blue-400">
+                <span className="text-xs font-medium text-blue-400">
                   {score.Statistics.great}
                 </span>
                 <span className="font-semibold text-muted-foreground"> • </span>
-                <span className="text-[9px] font-medium text-green-400">
+                <span className="text-xs font-medium text-green-400">
                   {score.Statistics.ok !== undefined ? score.Statistics.ok : 0}
                 </span>
                 <span className="font-semibold text-muted-foreground"> • </span>
-                <span className="text-[9px] font-medium text-yellow-400">
+                <span className="text-xs font-medium text-yellow-400">
                   {score.Statistics.meh !== undefined
                     ? score.Statistics.meh
                     : 0}
                 </span>
                 <span className="font-semibold text-muted-foreground"> • </span>
-                <span className="text-[11px] font-medium text-red-400">
+                <span className="text-sm font-medium text-red-400">
                   {score.Statistics.miss !== undefined
                     ? score.Statistics.miss
                     : 0}
                 </span>
               </div>
-              <p className="text-sm text-[9px] font-semibold text-muted-foreground">
+              <p className="text-xs font-semibold text-muted-foreground">
                 {relativeTime}
               </p>
             </div>

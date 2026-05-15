@@ -62,13 +62,13 @@ export function DatePickerWithRange() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+        <PopoverTrigger asChild>
         <Button
           variant="outline"
           id="date-picker-range"
-          className="justify-start px-2.5 font-normal"
+          className="justify-start px-4 py-2 text-base font-medium"
         >
-          <CalendarIcon />
+          <CalendarIcon className="h-6 w-6 mr-2" />
           {date?.from ? (
             date.to ? (
               <>
@@ -83,7 +83,7 @@ export function DatePickerWithRange() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-2" align="start">
         <Calendar
           mode="range"
           defaultMonth={date?.from ?? new Date()}
@@ -91,11 +91,11 @@ export function DatePickerWithRange() {
           onSelect={setDate}
           numberOfMonths={2}
         />
-        <div className="flex items-center justify-end gap-2 border-t p-3">
+        <div className="flex items-center justify-end gap-3 border-t p-4">
           <Button
             type="button"
             variant="ghost"
-            size="sm"
+            className="py-2 px-3 text-base"
             onClick={() => setDate(undefined)}
             disabled={!date?.from && !date?.to}
           >

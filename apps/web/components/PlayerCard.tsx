@@ -17,26 +17,26 @@ export function PlayerCard({ player }: PlayerCardProps) {
 
   return (
     <Link href={`/players/${player.ID}`} className="block">
-      <Card size="default" className="relative overflow-hidden py-2">
+      <Card size="default" className="relative overflow-hidden py-3">
         <CardContent className="relative z-20">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
-              <Avatar size="sm">
+              <Avatar size="default">
                 <AvatarImage src={`https://a.ppy.sh/${player.ID}`} alt={player.Username} />
                 <AvatarFallback>{fallback}</AvatarFallback>
               </Avatar>
 
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold leading-tight">{player.Username}</p>
-                <p className="text-[11px] text-muted-foreground leading-tight">#{player.GlobalRank} global</p>
+                <p className="truncate text-base font-semibold leading-tight">{player.Username}</p>
+                <p className="text-sm text-muted-foreground leading-tight">#{player.GlobalRank} global</p>
               </div>
             </div>
 
             <div className="flex flex-col items-end gap-1 text-right">
-              <Badge variant="secondary" className="h-5 px-2 text-[10px]">
+              <Badge variant="secondary" className="h-6 px-3 text-sm">
                 {player.scoreCount ? `${player.scoreCount} score` : "No scores"}
               </Badge>
-              <p className="text-sm font-semibold leading-tight">{player.Pp.toFixed(2)}pp</p>
+              <p className="text-base font-semibold leading-tight">{player.Pp.toFixed(2)}pp</p>
             </div>
           </div>
         </CardContent>

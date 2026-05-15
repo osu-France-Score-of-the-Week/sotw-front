@@ -49,17 +49,18 @@ export function ScoresFeed() {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-4">
       <div>
-        <h1 className="text-3xl font-bold">Scores</h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <h1 className="text-4xl font-bold">Scores</h1>
+        <p className="text-gray-600 dark:text-gray-400 text-lg">
           {sort === "best" ? "Top scores (pagination cursor)" : "Flux live des scores récents"}
         </p>
       </div>
 
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-3">
         <Button
           type="button"
           variant={sort === "recent" ? "default" : "outline"}
+          className="py-2 px-4 text-base"
           onClick={() => updateSort("recent")}
         >
           Récents
@@ -67,6 +68,7 @@ export function ScoresFeed() {
         <Button
           type="button"
           variant={sort === "best" ? "default" : "outline"}
+          className="py-2 px-4 text-base"
           onClick={() => updateSort("best")}
         >
           Best
@@ -80,10 +82,10 @@ export function ScoresFeed() {
       <Separator />
 
       {scores.length === 0 && isLoading ? (
-        <div className="space-y-2 py-2">
-          <Skeleton className="h-[90px] w-full" />
-          <Skeleton className="h-[90px] w-full" />
-          <Skeleton className="h-[90px] w-full" />
+        <div className="space-y-3 py-3">
+          <Skeleton className="h-[110px] w-full" />
+          <Skeleton className="h-[110px] w-full" />
+          <Skeleton className="h-[110px] w-full" />
         </div>
       ) : (
         <>
@@ -95,7 +97,7 @@ export function ScoresFeed() {
 
           {sort === "best" ? (
             <div className="pt-3">
-              <Button type="button" variant="outline" onClick={() => void fetchNextPage()} disabled={!hasMore || isLoading}>
+              <Button type="button" variant="outline" className="py-2 px-4 text-base" onClick={() => void fetchNextPage()} disabled={!hasMore || isLoading}>
                 {hasMore ? "Charger les 50 suivants" : "Plus de scores"}
               </Button>
             </div>
